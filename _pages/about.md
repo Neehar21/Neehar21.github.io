@@ -6,10 +6,11 @@ redirect_from:
   - /about/
   - /about.html
 ---
+![Block Diagram](/images/PINN diagram.png){: width = "300px"}
 
 Physics-Informed Neural Networks (PINNs) are a powerful fusion of deep learning and fundamental physical laws. Unlike traditional neural networks that rely solely on data, PINNs incorporate partial differential equations (PDEs) to ensure that predictions remain consistent with the governing physics of a system.This unique approach helps PINNs to make accurate predictions even with limited data making them very effective for solving complex scientific problems. From fluid mechanics to quantum physics, PINNs are transforming the way researchers model and understand the physical world.
 
-![Block Diagram](/images/PINN diagram.png)
+
 
 A data-driven personal website
 ======
