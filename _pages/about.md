@@ -24,7 +24,7 @@ Training of a PINN invloves minimizing the composite loss function, which is a c
 
  This ensures that the network's prediction at the start of the problem (i.e., at time t=0) matches the provided initial condition. The loss penalizes the network if its output deviates from the known initial values.
 
-![Initial Condition](/images/InitLoss.png){: width = "50px"}
+![Initial Condition](/images/initialLoss.png){: width = "50px"}
 
   - Lic(θ) is the loss function enforcing the initial condition.
   - Nic is the number of training points used to enforce the initial condition.
@@ -69,7 +69,7 @@ The training process of a Physics-Informed Neural Network (PINN) involves severa
 
 ![Composite Loss](/images/trpinn.png){: width = "50%"}
 
-- ### Neural Network Representation
+### Neural Network Representation
 At the core of the architecture is a fully connected neural network that takes spatial and temporal coordinates u(x,t) as inputs and produces an approximation of the solution function u(x,t). The network parameters (weights and biases) are updated iteratively to improve accuracy.
 
 ### Automatic Differentiation
