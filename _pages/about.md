@@ -27,6 +27,8 @@ Training of a PINN invloves minimizing the composite loss function, which is a c
  $$
 L_{ic}(\theta) = \frac{1}{N_{ic}} \sum_{i=1}^{N_{ic}} \left| u_{\theta}(0, x_c^i) - g(x_c^i) \right|^2
 $$
+
+
 ### Boundary Condition Loss: 
 
 This component enforces that the solution meets the boundary conditions at the spatial domain boundaries. If the network’s prediction at the boundaries doesn’t satisfy the required physical behavior, this loss term penalizes the network.
@@ -158,9 +160,10 @@ Algorithm for training PINNs affectively
 |-------------------------------|--------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
 | **Step 1: Preparation**       | Non-dimensionalize the PDE system                                                               | Ensures stability and consistency.                                                   |
 | **Step 2: Network Design**    | Represent the solution using an MLP with Fourier Feature Embeddings and Random Weight Factorization. | Use **Fourier embeddings**, tanh activation, and Glorot initialization.            |
-| **Step 3: Loss Function**     | Combine losses for initial conditions, boundary conditions, and physics laws.                   | L(θ) = λicLic(θ) + λbcLbc(θ) + λrLr(θ)     |
-| **Step 4: Weight Setup**      | Initialize all weights to 1.                                                                    | Global: \( \lambda_{ic}, \lambda_{bc}, \lambda_r \); Temporal: \( w_i = 1 \)        |
-| **Step 5: Training Loop**     | Train the network using gradient descent.                                                       | Adjust temporal/global weights, update parameters \( \theta \).                     |
+| **Step 3: Loss Function**     | Combine losses for initial conditions, boundary conditions, and physics laws.                   | $$ L(\theta) = \lambda_{ic} L_{ic}(\theta) + \lambda_{bc} L_{bc}(\theta) + \lambda_{r} L_{r}(\theta) $$
+   |
+| **Step 4: Weight Setup**      | Initialize all weights to 1.                                                                    | $$ \text{Global: } (\lambda_{ic}, \lambda_{bc}, \lambda_r); \text{ Temporal: } (w_i = 1) $$      |
+| **Step 5: Training Loop**     | Train the network using gradient descent.                                                       | $$ \text{Adjust temporal, global weights, update parameters } \theta. $$                    |
 
 
 
