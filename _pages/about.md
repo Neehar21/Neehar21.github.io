@@ -67,7 +67,7 @@ Training of a PINN
 ------
 The training process of a Physics-Informed Neural Network (PINN) involves several key steps that ensure the network learns a solution that satisfies both the given initial and boundary conditions as well as the underlying partial differential equation (PDE). 
 
-![PINN training](/images/trpinn.png){: width = "50%"}
+![PINN training](/images/PINNtr.png.png){: width = "50%"}
 
 ### Neural Network Representation
 At the core of the architecture is a fully connected neural network that takes spatial and temporal coordinates u(x,t) as inputs and produces an approximation of the solution function u(x,t). The network parameters (weights and biases) are updated iteratively to improve accuracy.
@@ -79,9 +79,6 @@ PINNs leverage automatic differentiation to compute derivatives of the predicted
 loss components are summed together to form the composite loss function, which acts as the optimization objective.
 
 The neural network parameters are updated iteratively using an optimization algorithm (such as gradient descent) to minimize the total loss. The training process continues until the loss function converges below a predefined threshold ϵ, ensuring that the network has learned an accurate solution.
-
-
-
 
 
 Challenges in Training PINNs
@@ -100,7 +97,7 @@ The composite loss function in PINNs consists of multiple terms, including initi
 Proposed training pipeline
 ------
 To overcome these challenges the following training pipeline has been proposed:
-![Training pipeline](/images/pipeline.png){: width = "50%"}
+![Training pipeline](/images/TrPipeline.png){: width = "50%"}
 
 
 For site content, there is one markdown file for each type of content, which are stored in directories like _publications, _talks, _posts, _teaching, or _pages. For example, each talk is a markdown file in the [_talks directory](https://github.com/academicpages/academicpages.github.io/tree/master/_talks). At the top of each markdown file is structured data in YAML about the talk, which the theme will parse to do lots of cool stuff. The same structured data about a talk is used to generate the list of talks on the [Talks page](https://academicpages.github.io/talks), each [individual page](https://academicpages.github.io/talks/2012-03-01-talk-1) for specific talks, the talks section for the [CV page](https://academicpages.github.io/cv), and the [map of places you've given a talk](https://academicpages.github.io/talkmap.html) (if you run this [python file](https://github.com/academicpages/academicpages.github.io/blob/master/talkmap.py) or [Jupyter notebook](https://github.com/academicpages/academicpages.github.io/blob/master/talkmap.ipynb), which creates the HTML for the map based on the contents of the _talks directory).
