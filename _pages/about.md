@@ -197,7 +197,7 @@ Abalation study is the method which is used to study the imoact of different com
 
 ![Allen cahn](/images/benchmark.png)
 
-#### *Figure 5: Abalation study results for Allen-Cahn equation*
+#### *Figure 4: Abalation study results for Allen-Cahn equation*
 ##### *source: Wang, Sifan, Shyam Sankaran, Hanwen Wang, and Paris Perdikaris. 2023. An Expert's Guide to Training Physics-informed Neural Networks.*
 
  As shown in figure 5,  the full algorithm yields the best performance with a relative L2 error of 5.84×10−4. Disabling any component results in a degradation of performance, with the most significant drop observed when the Fourier Feature embedding is removed (error 4.35×10 −1
@@ -211,4 +211,21 @@ The 1D Allen-Cahn equation revealed critical challenges for conventional PINNs, 
 
 Fourier feature embeddings and random weight factorization significantly enhanced model performance, mitigating spectral bias. Gradient normalization and causality weighting ensured balanced training and maintained correct temporal relationships. The full algorithm achieved state-of-the-art results, with a relative L2 error of 5.84×10 −4, demonstrating its robustness and effectiveness.
 
+Suggested Improvements
+------
+- While gradient descent and its variants are widely used, further exploration into more advanced optimization algorithms (such as L-BFGS or adaptive optimizers) could potentially improve convergence speed and accuracy.
 
+- Combining PINNs with other deep learning architectures such as recurrent neural networks (RNNs) for time-series problems or convolutional neural networks (CNNs) for spatially distributed solutions could be used in other domians as well.
+
+- In many cases, limited data can reduce the accuracy of PINNs. Using synthetic data generation methods or incorporating physics-informed augmentation techniques could provide the network with richer input, helping to bridge the gap between sparse observational data and robust physical models.
+
+
+References
+------
+Wang, Sifan, Shyam Sankaran, Hanwen Wang, and Paris Perdikaris. An Expert's Guide to Training Physics-Informed Neural Networks. 2023.
+
+Raissi, M., Perdikaris, P., & Karniadakis, G. E. (2019). Physics-Informed Neural Networks: A Deep Learning Framework for Solving Forward and Inverse Problems Involving Nonlinear Partial Differential Equations. Journal of Computational Physics, 378, 686-707.
+
+Karniadakis, G. E., Lu, L., & Perdikaris, P. (2021). Physics-Informed Machine Learning. SIAM Review, 63(3), 495-523.
+
+Sirignano, J., & Spiliopoulos, K. (2018). DGM: A Deep Learning Algorithm for Solving Partial Differential Equations. Journal of Computational Physics, 375, 1339-1364.
