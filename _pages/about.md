@@ -30,6 +30,7 @@ $$
 ### Boundary Condition Loss: 
 
 This component enforces that the solution meets the boundary conditions at the spatial domain boundaries. If the network’s prediction at the boundaries doesn’t satisfy the required physical behavior, this loss term penalizes the network.
+
 $$
 L_{bc}(\theta) = \frac{1}{N_{bc}} \sum_{i=1}^{N_{bc}} \left| B[u_{\theta}](t_{bc}^i, x_{bc}^i) \right|^2
 $$
@@ -116,7 +117,7 @@ Selecting a suitable architecture is also critical for ensuring that PINNs can e
 
 - **Random Fourier Feature Embeddings:** This technique is used to counteract spectral bias. RWF transforms input coordinates into a higher-dimensional representation using sinusoidal functions before passing them through the MLP.
   - **Why it works:** Fourier embeddings allow the network to represent high-frequency components more effectively, improving its ability to capture sharp transitions in PDE solutions.
-- **Random Weight Factorization (RWF):** RWF is a method that improves model convergence and robustness by factorizing weight matrices into scaling factors and direction vectors. Instead of learning raw weights directly, this technique reformulates them as:    $W = \text{diag}(\exp(s)) \cdot V$
+- **Random Weight Factorization (RWF):** RWF is a method that improves model convergence and robustness by factorizing weight matrices into scaling factors and direction vectors. Instead of learning raw weights directly, this technique reformulates them as:    $$ W = \text{diag}(\exp(s)) \cdot V $$
  
 
   where **s** is a trainable scale factor and **V** represents the weight matrix. Advanteages of using this approch are: 
