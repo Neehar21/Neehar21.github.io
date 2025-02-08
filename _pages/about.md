@@ -8,6 +8,7 @@ redirect_from:
 ---
 ![Block Diagram](/images/PINN-diagram.png){: .align-right width = "50%"}
 
+
 Physics-Informed Neural Networks (PINNs) are a powerful fusion of deep learning and fundamental physical laws. Unlike traditional neural networks that rely solely on data, PINNs incorporate partial differential equations (PDEs) to ensure that predictions remain consistent with the governing physics of a system.This unique approach helps PINNs to make accurate predictions even with limited data making them very effective for solving complex scientific problems. From fluid mechanics to quantum physics, PINNs are transforming the way researchers model and understand the physical world.
 
 Problem formulation in PINNs
@@ -66,6 +67,8 @@ The training process of a Physics-Informed Neural Network (PINN) involves severa
 
 ![PINN training](/images/PINNtr.png){: width = "50%"}
 
+#### *Figure 1: Training of a conventional PINN*
+
 ### Neural Network Representation
 At the core of the architecture is a fully connected neural network that takes spatial and temporal coordinates u(x,t) as inputs and produces an approximation of the solution function u(x,t). The network parameters (weights and biases) are updated iteratively to improve accuracy.
 
@@ -96,6 +99,9 @@ Proposed training pipeline
 To overcome these challenges the following training pipeline has been proposed:
 
 ![Training pipeline](/images/trainingPipeline.png){: width = "50%"}
+
+#### *Figure 2: Training pipeline of a PINN*
+##### *source: Wang, Sifan, Shyam Sankaran, Hanwen Wang, and Paris Perdikaris. 2023. An Expert's Guide to Training Physics-informed Neural Networks.*
 
 ### PDE Non-Dimensionalization:
 
@@ -176,7 +182,8 @@ This is a widely studied non-linear PDE used to model phase transitions in physi
 - **Issues with conventional PINNs:** After analyzing the performance of a conventional PINN model applied to the 1D Allen-Cahn equation three main issues are observed, wich are evident from the analysis figure below.
 
 ![Allen cahn](/images/allenCahn.png)
-#### *Figure 4:  Figure: Training analysis of a conventional PINN model for 10,000 iterations. Top left: Histograms of back-propagated gradients for PDE residual and initial condition losses, showing gradient imbalance. Top right: Temporal PDE residual loss, indicating causality violation. Bottom: NTK eigenvaluesvrevealing spectral bias.*
+#### *Figure 3: Training analysis of a conventional PINN model for 10,000 iterations. Top left: Histograms of back-propagated gradients for PDE residual and initial condition losses, showing gradient imbalance. Top right: Temporal PDE residual loss, indicating causality violation. Bottom: NTK eigenvaluesvrevealing spectral bias.*
+##### *source: Wang, Sifan, Shyam Sankaran, Hanwen Wang, and Paris Perdikaris. 2023. An Expert's Guide to Training Physics-informed Neural Networks.*
 
 
   - **Gradient Imbalances:** Back-propagated gradients for the PDE residual loss dominate those of the initial condition loss, resulting in unbalanced updates during training.
@@ -185,27 +192,23 @@ This is a widely studied non-linear PDE used to model phase transitions in physi
 
   - **Causality Violation:** The model minimizes PDE residuals at later times first, violating the physical causality of the problem.
 
+### Abalation Study:
+Abalation study is the method which is used to study the imoact of different compnonents on the performance of the system. The models performance on the can be observed by disabling certain components of the algorithm as shown below,
 
+![Allen cahn](/images/benchmark.png)
 
+#### *Figure 5: Abalation study results for Allen-Cahn equation*
+##### *source: Wang, Sifan, Shyam Sankaran, Hanwen Wang, and Paris Perdikaris. 2023. An Expert's Guide to Training Physics-informed Neural Networks.*
 
+ As shown in figure 5,  the full algorithm yields the best performance with a relative L2 error of 5.84×10−4. Disabling any component results in a degradation of performance, with the most significant drop observed when the Fourier Feature embedding is removed (error 4.35×10 −1
+ ). This indicates that addressing spectral bias is crucial for improving model accuracy. Run-times across configurations are consistent, with conventional PINNs showing a slightly shorter run-time of 12.93 minutes.
 
-
-
-
-
-
-**Markdown generator**
-
-The repository includes [a set of Jupyter notebooks](https://github.com/academicpages/academicpages.github.io/tree/master/markdown_generator
-) that converts a CSV containing structured data about talks or presentations into individual markdown files that will be properly formatted for the Academic Pages template. The sample CSVs in that directory are the ones I used to create my own personal website at stuartgeiger.com. My usual workflow is that I keep a spreadsheet of my publications and talks, then run the code in these notebooks to generate the markdown files, then commit and push them to the GitHub repository.
-
-How to edit your site's GitHub repository
+Conclusion
 ------
-Many people use a git client to create files on their local computer and then push them to GitHub's servers. If you are not familiar with git, you can directly edit these configuration and markdown files directly in the github.com interface. Navigate to a file (like [this one](https://github.com/academicpages/academicpages.github.io/blob/master/_talks/2012-03-01-talk-1.md) and click the pencil icon in the top right of the content preview (to the right of the "Raw | Blame | History" buttons). You can delete a file by clicking the trashcan icon to the right of the pencil icon. You can also create new files or upload files by navigating to a directory and clicking the "Create new file" or "Upload files" buttons. 
+The 1D Allen-Cahn equation revealed critical challenges for conventional PINNs, including gradient imbalances, spectral bias, and causality violations. These issues were effectively addressed by the proposed training pipeline.
 
-Example: editing a markdown file for a talk
-![Editing a markdown file for a talk](/images/editing-talk.png)
+### Key Contributions:
 
-For more info
-------
-More info about configuring Academic Pages can be found in [the guide](https://academicpages.github.io/markdown/), the [growing wiki](https://github.com/academicpages/academicpages.github.io/wiki), and you can always [ask a question on GitHub](https://github.com/academicpages/academicpages.github.io/discussions). The [guides for the Minimal Mistakes theme](https://mmistakes.github.io/minimal-mistakes/docs/configuration/) (which this theme was forked from) might also be helpful.
+Fourier feature embeddings and random weight factorization significantly enhanced model performance, mitigating spectral bias. Gradient normalization and causality weighting ensured balanced training and maintained correct temporal relationships. The full algorithm achieved state-of-the-art results, with a relative L2 error of 5.84×10 −4, demonstrating its robustness and effectiveness.
+
+
