@@ -77,7 +77,7 @@ Training of a PINN invloves minimizing the composite loss function, which is a c
 
  This ensures that the network's prediction at the start of the problem (i.e., at time t=0) matches the provided initial condition. The loss penalizes the network if its output deviates from the known initial values.
 
-![Initial Condition](/images/InitLoss.png){: width = "50px"}
+![Initial Condition](/images/initialLoss.png){: width = "50px"}
 
   where,
   - Lic(θ) is the loss function enforcing the initial condition.
