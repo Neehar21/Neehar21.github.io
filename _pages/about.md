@@ -20,11 +20,11 @@ The Composite Loss Function
 ======
 Training of a PINN invloves minimizing the composite loss function, which is a combination of three key components:
 
-###  - Initial Condition Loss
+### Initial Condition Loss
 
  This ensures that the network's prediction at the start of the problem (i.e., at time t=0) matches the provided initial condition. The loss penalizes the network if its output deviates from the known initial values.
 
-![Initial Condition](/images/InitialCondition.png){: width = "50px"}
+![Initial Condition](/images/InitLoss.png){: width = "50px"}
 
   where,
   - Lic(θ) is the loss function enforcing the initial condition.
@@ -33,21 +33,21 @@ Training of a PINN invloves minimizing the composite loss function, which is a c
   - g(xci) is the actual initial condition value at xci.
 ​
 
-### - Boundary Condition Loss: 
+### Boundary Condition Loss: 
 
 This component enforces that the solution meets the boundary conditions at the spatial domain boundaries. If the network’s prediction at the boundaries doesn’t satisfy the required physical behavior, this loss term penalizes the network.
 
-![Boundary Condition](/images/BoundaryCondition.png){: width = "50%"}
+![Boundary Condition](/images/Boundloss.png){: width = "50%"}
 
   where,
   - Lbc(θ) is the loss function enforcing boundary conditions.
   - Nbc is the number of training points used to enforce the boundary condition.
   - B[uθ] is the boundary condition operator applied to the predicted solution at time t and spatial location x.
 
-### - PDE Residual Loss: 
+### PDE Residual Loss: 
 The core of the PINN approach is ensuring that the network's predictions satisfy the PDE itself. This loss term calculates how well the network's output adheres to the governing differential equation by minimizing the residual of the PDE.
 
-![Residual Loss](/images/ResidualCondition.png){: width = "50%"}
+![Residual Loss](/images/resloss.png){: width = "50%"}
 
   where,
   - Lr(θ) is the loss function enforcing the PDE constraints.
@@ -60,7 +60,7 @@ The goal of minimizing this term is to ensure that the neural network’s learne
 
 By combining all three losses, we define the total loss function as:
 
-![Composite Loss](/images/compositeloss.png){: width = "50%"}
+![Composite Loss](/images/comploss.png){: width = "50%"}
 
 This function serves as the objective for optimization. The training process adjusts the network parameters 𝜃 to minimize this total loss, ensuring that the predictions satisfy the initial
 conditions, boundary conditions, and PDE itself.
