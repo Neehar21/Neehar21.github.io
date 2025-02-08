@@ -10,14 +10,14 @@ redirect_from:
 
 Physics-Informed Neural Networks (PINNs) are a powerful fusion of deep learning and fundamental physical laws. Unlike traditional neural networks that rely solely on data, PINNs incorporate partial differential equations (PDEs) to ensure that predictions remain consistent with the governing physics of a system.This unique approach helps PINNs to make accurate predictions even with limited data making them very effective for solving complex scientific problems. From fluid mechanics to quantum physics, PINNs are transforming the way researchers model and understand the physical world.
 
-Problem Formulation in PINNs
-======
+Problem formulation in PINNs
+------
 Physics-Informed Neural Networks (PINNs) are designed to solve partial differential equations (PDEs) by incorporating physical laws directly into the learning process. These physical laws are represented in the form of a PDE, where the goal is to find a solution that satisfies both the equation itself and the initial and boundary conditions.
 
 A PDE typically describes how a function changes over both time and space. The primary goal of a PINN is to minimize a composite loss function that incorporates different aspects of the problem, ensuring that the network's predictions align with both the physical model and the given conditions.
 
-The Composite Loss Function
-======
+The composite loss function
+------
 Training of a PINN invloves minimizing the composite loss function, which is a combination of three key components:
 
 ### Initial Condition Loss
@@ -64,10 +64,10 @@ conditions, boundary conditions, and PDE itself.
 
 
 Training of a PINN
-======
+------
 The training process of a Physics-Informed Neural Network (PINN) involves several key steps that ensure the network learns a solution that satisfies both the given initial and boundary conditions as well as the underlying partial differential equation (PDE). 
 
-![Composite Loss](/images/trpinn.png){: width = "50%"}
+![PINN training](/images/trpinn.png){: width = "50%"}
 
 ### Neural Network Representation
 At the core of the architecture is a fully connected neural network that takes spatial and temporal coordinates u(x,t) as inputs and produces an approximation of the solution function u(x,t). The network parameters (weights and biases) are updated iteratively to improve accuracy.
@@ -79,62 +79,6 @@ PINNs leverage automatic differentiation to compute derivatives of the predicted
 loss components are summed together to form the composite loss function, which acts as the optimization objective.
 
 The neural network parameters are updated iteratively using an optimization algorithm (such as gradient descent) to minimize the total loss. The training process continues until the loss function converges below a predefined threshold ϵ, ensuring that the network has learned an accurate solution.
-
-
-The Composite Loss Function
-======
-Training of a PINN invloves minimizing the composite loss function, which is a combination of three key components:
-
-### Initial Condition Loss
-
- This ensures that the network's prediction at the start of the problem (i.e., at time t=0) matches the provided initial condition. The loss penalizes the network if its output deviates from the known initial values.
-
-![Initial Condition](/images/initialLoss.png){: width = "50px"}
-
-  where,
-  - Lic(θ) is the loss function enforcing the initial condition.
-  - Nic is the number of training points used to enforce the initial condition.
-  - uθ(0,xci) is the network's predicted solution at the initial time for a given spatial point.
-  - g(xci) is the actual initial condition value at xci.
-​
-
-### Boundary Condition Loss: 
-
-This component enforces that the solution meets the boundary conditions at the spatial domain boundaries. If the network’s prediction at the boundaries doesn’t satisfy the required physical behavior, this loss term penalizes the network.
-
-![Boundary Condition](/images/Boundloss.png){: width = "50%"}
-
-  where,
-  - Lbc(θ) is the loss function enforcing boundary conditions.
-  - Nbc is the number of training points used to enforce the boundary condition.
-  - B[uθ] is the boundary condition operator applied to the predicted solution at time t and spatial location x.
-
-### PDE Residual Loss: 
-The core of the PINN approach is ensuring that the network's predictions satisfy the PDE itself. This loss term calculates how well the network's output adheres to the governing differential equation by minimizing the residual of the PDE.
-
-![Residual Loss](/images/resloss.png){: width = "50%"}
-
-  where,
-  - Lr(θ) is the loss function enforcing the PDE constraints.
-  - Nr is the number of training points sampled for checking PDE satisfaction.
-  - Rθ(t,x) is the PDE residual, which measures how well the network's predictions satisfy the differential equation.
-
-The goal of minimizing this term is to ensure that the neural network’s learned solution respects the underlying physical equations governing the system.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
