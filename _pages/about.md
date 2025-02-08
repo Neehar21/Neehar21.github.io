@@ -113,14 +113,49 @@ Non-dimensionalization is a technique used to simplify and analyze physical syst
 
 Selecting a suitable architecture is also critical for ensuring that PINNs can efficiently learn complex PDE solutions. The following network design choices have been proposed:
 
+
 - **Multi-Layer Perceptrons (MLPs):**  MLPs are universal approximatiors, mapping spatial and temporal coordinates to solution values. 
 
   - **Recommended depth and width:** 3–6 layers with 128–512 neurons per layer.
   - **Activation functions:** The Tanh function is preferred as it provides smooth, differentiable outputs. Functions like ReLU are avoided due to their zero second-order derivative, which negatively impacts PDE residual computation.
   - **Initialization:** The Glorot scheme is used to initialize weights, ensuring balanced gradient flow during training.
 
+- **Random Fourier Feature Embeddings:** This technique is used to counteract spectral bias. RWF transforms input coordinates into a higher-dimensional representation using sinusoidal functions before passing them through the MLP.
+  - **Why it works:** Fourier embeddings allow the network to represent high-frequency components more effectively, improving its ability to capture sharp transitions in PDE solutions.
+- **Random Weight Factorization (RWF):** RWF is a method that improves model convergence and robustness by factorizing weight matrices into scaling factors and direction vectors. Instead of learning raw weights directly, this technique reformulates them as:     <br> **W=diag(exp(s))⋅V** <br>
 
-For site content, there is one markdown file for each type of content, which are stored in directories like _publications, _talks, _posts, _teaching, or _pages. For example, each talk is a markdown file in the [_talks directory](https://github.com/academicpages/academicpages.github.io/tree/master/_talks). At the top of each markdown file is structured data in YAML about the talk, which the theme will parse to do lots of cool stuff. The same structured data about a talk is used to generate the list of talks on the [Talks page](https://academicpages.github.io/talks), each [individual page](https://academicpages.github.io/talks/2012-03-01-talk-1) for specific talks, the talks section for the [CV page](https://academicpages.github.io/cv), and the [map of places you've given a talk](https://academicpages.github.io/talkmap.html) (if you run this [python file](https://github.com/academicpages/academicpages.github.io/blob/master/talkmap.py) or [Jupyter notebook](https://github.com/academicpages/academicpages.github.io/blob/master/talkmap.ipynb), which creates the HTML for the map based on the contents of the _talks directory).
+  where **s** is a trainable scale factor and **V** represents the weight matrix. Advanteages of using this approch are: 
+
+  - More stable optimization
+  - Improved generalization
+  - Faster training convergence
+
+
+### Training: 
+
+- **Loss Balancing:** PINNs struggle with multi-scale losses, making manual weight selection impractical. We use a self-adaptive loss balancing approach by:
+
+  - Normalizing gradient norms across different loss terms.
+  - Updating weights dynamically to prevent bias toward specific losses.
+  - Exploring NTK-based weighting, though it is computationally heavier.
+
+
+### Respecting Temporal Causality:
+
+Physics-Informed Neural Networks (PINNs) often violate temporal causality when solving time-dependent PDEs. To address this, the following can be done: 
+
+- Split the temporal domain into segments.
+- Assign exponential temporal weights to ensure solutions progress sequentially.
+- Use a carefully chosen causality parameter ϵ to balance optimization difficulty.
+
+### Curriculum Training: 
+For complex problems like high Reynolds number fluid dynamics, standard PINN training fails. A curriculum approach helps by:
+
+- Breaking training into smaller, manageable time windows.
+- Using prior solutions as initialization for subsequent steps.
+- Gradually increasing difficulty, such as solving lower Reynolds numbers first.
+
+
 
 **Markdown generator**
 
