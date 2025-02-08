@@ -27,24 +27,12 @@ Training of a PINN invloves minimizing the composite loss function, which is a c
  $$
 L_{ic}(\theta) = \frac{1}{N_{ic}} \sum_{i=1}^{N_{ic}} \left| u_{\theta}(0, x_c^i) - g(x_c^i) \right|^2
 $$
-  ​- $L_{ic}(\theta)$ is the loss function enforcing the initial condition.  
-  - $N_{ic}$ is the number of training points used to enforce the initial condition.  
-  - $u_{\theta}(0, x_c^i)$ is the network's predicted solution at the initial time for a given spatial point.  
-  - $g(x_c^i)$ is the actual initial condition value at $x_c^i$. 
-
 ### Boundary Condition Loss: 
 
 This component enforces that the solution meets the boundary conditions at the spatial domain boundaries. If the network’s prediction at the boundaries doesn’t satisfy the required physical behavior, this loss term penalizes the network.
 $$
 L_{bc}(\theta) = \frac{1}{N_{bc}} \sum_{i=1}^{N_{bc}} \left| B[u_{\theta}](t_{bc}^i, x_{bc}^i) \right|^2
 $$
-- $L_{bc}(\theta)$ is the loss function enforcing boundary conditions.  
-- $N_{bc}$ is the number of training points used to enforce the boundary condition.  
-- $B[u_{\theta}]$ is the boundary condition operator applied to the predicted solution at time $t$ and spatial location $x$.  
-- \( L_{bc}(\theta) \) is the loss function enforcing boundary conditions.  
-- \( N_{bc} \) is the number of training points used to enforce the boundary condition.  
-- \( B[u_{\theta}] \) is the boundary condition operator applied to the predicted solution at time \( t \) and spatial location \( x \).  
-
 
 
 ### PDE Residual Loss: 
@@ -54,9 +42,7 @@ $$
 L_r(\theta) = \frac{1}{N_r} \sum_{i=1}^{N_r} \left| R_{\theta}(t_r^i, x_r^i) \right|^2
 $$
 
-- $L_{r}(\theta)$ is the loss function enforcing the PDE constraints.  
-- $N_{r}$ is the number of training points sampled for checking PDE satisfaction.  
-- $R_{\theta}(t, x)$ is the PDE residual, which measures how well the network's predictions satisfy the differential equation.  
+
 
 The goal of minimizing this term is to ensure that the neural network’s learned solution respects the underlying physical equations governing the system.
 
@@ -64,7 +50,8 @@ The goal of minimizing this term is to ensure that the neural network’s learne
 
 By combining all three losses, we define the total loss function as:
 
-![Composite Loss](/images/comploss.png){: width = "50%"}
+$$ L(\theta) = L_{ic}(\theta) + L_{bc}(\theta) + L_{r}(\theta) $$
+
 
 This function serves as the objective for optimization. The training process adjusts the network parameters 𝜃 to minimize this total loss, ensuring that the predictions satisfy the initial
 conditions, boundary conditions, and PDE itself.
@@ -129,7 +116,8 @@ Selecting a suitable architecture is also critical for ensuring that PINNs can e
 
 - **Random Fourier Feature Embeddings:** This technique is used to counteract spectral bias. RWF transforms input coordinates into a higher-dimensional representation using sinusoidal functions before passing them through the MLP.
   - **Why it works:** Fourier embeddings allow the network to represent high-frequency components more effectively, improving its ability to capture sharp transitions in PDE solutions.
-- **Random Weight Factorization (RWF):** RWF is a method that improves model convergence and robustness by factorizing weight matrices into scaling factors and direction vectors. Instead of learning raw weights directly, this technique reformulates them as:     <br> **W=diag(exp(s))⋅V** <br>
+- **Random Weight Factorization (RWF):** RWF is a method that improves model convergence and robustness by factorizing weight matrices into scaling factors and direction vectors. Instead of learning raw weights directly, this technique reformulates them as:    $W = \text{diag}(\exp(s)) \cdot V$
+ 
 
   where **s** is a trainable scale factor and **V** represents the weight matrix. Advanteages of using this approch are: 
 
