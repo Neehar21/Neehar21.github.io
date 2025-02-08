@@ -20,39 +20,39 @@ The Composite Loss Function
 ======
 Training of a PINN invloves minimizing the composite loss function, which is a combination of three key components:
 
-  ## 1. Initial Condition Loss
+###  - Initial Condition Loss
 
  This ensures that the network's prediction at the start of the problem (i.e., at time t=0) matches the provided initial condition. The loss penalizes the network if its output deviates from the known initial values.
 
-![Initial Condition](/images/InitialCondition.png){: width = "50%"}
+![Initial Condition](/images/InitialCondition.png){: width = "5%"}
 
   where,
-  Lic(θ) is the loss function enforcing the initial condition.
-  Nic is the number of training points used to enforce the initial condition.
-  uθ(0,xci) is the network's predicted solution at the initial time for a given spatial point.
-  g(xci) is the actual initial condition value at xci.
+  - Lic(θ) is the loss function enforcing the initial condition.
+  - Nic is the number of training points used to enforce the initial condition.
+  - uθ(0,xci) is the network's predicted solution at the initial time for a given spatial point.
+  - g(xci) is the actual initial condition value at xci.
 ​
 
-## 2. Boundary Condition Loss: 
+### - Boundary Condition Loss: 
 
 This component enforces that the solution meets the boundary conditions at the spatial domain boundaries. If the network’s prediction at the boundaries doesn’t satisfy the required physical behavior, this loss term penalizes the network.
 
 ![Boundary Condition](/images/BoundaryCondition.png){: width = "50%"}
 
   where,
-  Lbc(θ) is the loss function enforcing boundary conditions.
-  Nbc is the number of training points used to enforce the boundary condition.
-  B[uθ] is the boundary condition operator applied to the predicted solution at time t and spatial location x.
+  - Lbc(θ) is the loss function enforcing boundary conditions.
+  - Nbc is the number of training points used to enforce the boundary condition.
+  - B[uθ] is the boundary condition operator applied to the predicted solution at time t and spatial location x.
 
-### 3. PDE Residual Loss: 
+### - PDE Residual Loss: 
 The core of the PINN approach is ensuring that the network's predictions satisfy the PDE itself. This loss term calculates how well the network's output adheres to the governing differential equation by minimizing the residual of the PDE.
 
 ![Residual Loss](/images/ResidualCondition.png){: width = "50%"}
 
   where,
-  Lr(θ) is the loss function enforcing the PDE constraints.
-  Nr is the number of training points sampled for checking PDE satisfaction.
-  Rθ(t,x) is the PDE residual, which measures how well the network's predictions satisfy the differential equation.
+  - Lr(θ) is the loss function enforcing the PDE constraints.
+  - Nr is the number of training points sampled for checking PDE satisfaction.
+  - Rθ(t,x) is the PDE residual, which measures how well the network's predictions satisfy the differential equation.
 
 The goal of minimizing this term is to ensure that the neural network’s learned solution respects the underlying physical equations governing the system.
 
