@@ -63,11 +63,9 @@ This function serves as the objective for optimization. The training process adj
 conditions, boundary conditions, and PDE itself.
 
 
-Problem Formulation in PINNs
+Training of a PINN
 ======
-Physics-Informed Neural Networks (PINNs) are designed to solve partial differential equations (PDEs) by incorporating physical laws directly into the learning process. These physical laws are represented in the form of a PDE, where the goal is to find a solution that satisfies both the equation itself and the initial and boundary conditions.
-
-A PDE typically describes how a function changes over both time and space. The primary goal of a PINN is to minimize a composite loss function that incorporates different aspects of the problem, ensuring that the network's predictions align with both the physical model and the given conditions.
+![Composite Loss](/images/TrainPINN.png){: width = "50%"}
 
 The Composite Loss Function
 ======
