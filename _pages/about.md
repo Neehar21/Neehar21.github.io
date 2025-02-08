@@ -95,7 +95,7 @@ Proposed training pipeline
 ------
 To overcome these challenges the following training pipeline has been proposed:
 
-![Training pipeline](/images/TrPipeline.png){: width = "50%"}
+![Training pipeline](/images/trainingPipeline.png){: width = "50%"}
 
 ### PDE Non-Dimensionalization:
 
@@ -173,7 +173,11 @@ This is a widely studied non-linear PDE used to model phase transitions in physi
 
   $$ u_t - 0.0001 u_{xx} + 5u^3 - 5u = 0, \quad u(0,x) = x^2 \cos(\pi x), \quad t \in [0,1], x \in [-1,1] $$
 
-- **Issues with conventional PINNs:** After analyzing the performance of a conventional PINN model applied to the 1D Allen-Cahn equation three main issues are observed:
+- **Issues with conventional PINNs:** After analyzing the performance of a conventional PINN model applied to the 1D Allen-Cahn equation three main issues are observed, wich are evident from the analysis figure below.
+
+![Allen cahn](/images/allenCahn.png)
+#### *Figure 4:  Figure: Training analysis of a conventional PINN model for 10,000 iterations. Top left: Histograms of back-propagated gradients for PDE residual and initial condition losses, showing gradient imbalance. Top right: Temporal PDE residual loss, indicating causality violation. Bottom: NTK eigenvaluesvrevealing spectral bias.*
+
 
   - **Gradient Imbalances:** Back-propagated gradients for the PDE residual loss dominate those of the initial condition loss, resulting in unbalanced updates during training.
 
@@ -181,7 +185,7 @@ This is a widely studied non-linear PDE used to model phase transitions in physi
 
   - **Causality Violation:** The model minimizes PDE residuals at later times first, violating the physical causality of the problem.
 
-![Allen cahn](/images/allenCahn.png)
+
 
 
 
