@@ -24,17 +24,20 @@ Training of a PINN invloves minimizing the composite loss function, which is a c
 
  This ensures that the network's prediction at the start of the problem (i.e., at time t=0) matches the provided initial condition. The loss penalizes the network if its output deviates from the known initial values.
 
-![Initial Condition](/images/initialLoss.png){: width = "50px"}
-
-  - Lic(θ) is the loss function enforcing the initial condition.
-  - Nic is the number of training points used to enforce the initial condition.
-  - uθ(0,xci) is the network's predicted solution at the initial time for a given spatial point.
-  - g(xci) is the actual initial condition value at xci.
-​
+ $$
+L_{ic}(\theta) = \frac{1}{N_{ic}} \sum_{i=1}^{N_{ic}} \left| u_{\theta}(0, x_c^i) - g(x_c^i) \right|^2
+$$
+  ​- $L_{ic}(\theta)$ is the loss function enforcing the initial condition.  
+  - $N_{ic}$ is the number of training points used to enforce the initial condition.  
+  - $u_{\theta}(0, x_c^i)$ is the network's predicted solution at the initial time for a given spatial point.  
+  - $g(x_c^i)$ is the actual initial condition value at $x_c^i$. 
 
 ### Boundary Condition Loss: 
 
 This component enforces that the solution meets the boundary conditions at the spatial domain boundaries. If the network’s prediction at the boundaries doesn’t satisfy the required physical behavior, this loss term penalizes the network.
+$$
+L_{bc}(\theta) = \frac{1}{N_{bc}} \sum_{i=1}^{N_{bc}} \left| B[u_{\theta}](t_{bc}^i, x_{bc}^i) \right|^2
+$$
 
 ![Boundary Condition](/images/Boundloss.png){: width = "50%"}
 
@@ -44,6 +47,10 @@ This component enforces that the solution meets the boundary conditions at the s
 
 ### PDE Residual Loss: 
 The core of the PINN approach is ensuring that the network's predictions satisfy the PDE itself. This loss term calculates how well the network's output adheres to the governing differential equation by minimizing the residual of the PDE.
+
+$$
+L_r(\theta) = \frac{1}{N_r} \sum_{i=1}^{N_r} \left| R_{\theta}(t_r^i, x_r^i) \right|^2
+$$
 
 ![Residual Loss](/images/resloss.png){: width = "50%"}
 
@@ -140,20 +147,37 @@ Selecting a suitable architecture is also critical for ensuring that PINNs can e
   - Exploring NTK-based weighting, though it is computationally heavier.
 
 
-### Respecting Temporal Causality:
+- **Respecting Temporal Causality**:
 
-Physics-Informed Neural Networks (PINNs) often violate temporal causality when solving time-dependent PDEs. To address this, the following can be done: 
+  Physics-Informed Neural Networks (PINNs) often violate temporal causality when solving time-dependent PDEs. To address this, the following can be done: 
 
-- Split the temporal domain into segments.
-- Assign exponential temporal weights to ensure solutions progress sequentially.
-- Use a carefully chosen causality parameter ϵ to balance optimization difficulty.
+  - Split the temporal domain into segments.
+  - Assign exponential temporal weights to ensure solutions progress sequentially.
+  - Use a carefully chosen causality parameter ϵ to balance optimization difficulty.
 
-### Curriculum Training: 
-For complex problems like high Reynolds number fluid dynamics, standard PINN training fails. A curriculum approach helps by:
+- **Curriculum Training**: 
+  For complex problems like high Reynolds number fluid dynamics, standard PINN training fails. A curriculum approach helps by:
 
-- Breaking training into smaller, manageable time windows.
-- Using prior solutions as initialization for subsequent steps.
-- Gradually increasing difficulty, such as solving lower Reynolds numbers first.
+  - Breaking training into smaller, manageable time windows.
+  - Using prior solutions as initialization for subsequent steps.
+  - Gradually increasing difficulty, such as solving lower Reynolds numbers first.
+
+Algorithm for training PINNs affectively
+------
+
+| Step                          | Description                                                                                       | Key Details                                                                          |
+|-------------------------------|--------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| **Step 1: Preparation**       | Non-dimensionalize the PDE system                                                               | Ensures stability and consistency.                                                   |
+| **Step 2: Network Design**    | Represent the solution using an MLP with Fourier Feature Embeddings and Random Weight Factorization. | Use **Fourier embeddings**, tanh activation, and Glorot initialization.            |
+| **Step 3: Loss Function**     | Combine losses for initial conditions, boundary conditions, and physics laws.                   | L(θ) = λicLic(θ) + λbcLbc(θ) + λrLr(θ)     |
+| **Step 4: Weight Setup**      | Initialize all weights to 1.                                                                    | Global: \( \lambda_{ic}, \lambda_{bc}, \lambda_r \); Temporal: \( w_i = 1 \)        |
+| **Step 5: Training Loop**     | Train the network using gradient descent.                                                       | Adjust temporal/global weights, update parameters \( \theta \).                     |
+
+
+
+
+
+
 
 
 
