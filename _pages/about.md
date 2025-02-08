@@ -65,7 +65,21 @@ conditions, boundary conditions, and PDE itself.
 
 Training of a PINN
 ======
-![Composite Loss](/images/TrainPINN.png){: width = "50%"}
+The training process of a Physics-Informed Neural Network (PINN) involves several key steps that ensure the network learns a solution that satisfies both the given initial and boundary conditions as well as the underlying partial differential equation (PDE). 
+
+![Composite Loss](/images/trpinn.png){: width = "50%"}
+
+- ### Neural Network Representation
+At the core of the architecture is a fully connected neural network that takes spatial and temporal coordinates u(x,t) as inputs and produces an approximation of the solution function u(x,t). The network parameters (weights and biases) are updated iteratively to improve accuracy.
+
+### Automatic Differentiation
+PINNs leverage automatic differentiation to compute derivatives of the predicted solution u(x,t). These derivatives are essential for computing the PDE residual loss.
+
+### Loss Function Computation
+loss components are summed together to form the composite loss function, which acts as the optimization objective.
+
+The neural network parameters are updated iteratively using an optimization algorithm (such as gradient descent) to minimize the total loss. The training process continues until the loss function converges below a predefined threshold ϵ, ensuring that the network has learned an accurate solution.
+
 
 The Composite Loss Function
 ======
