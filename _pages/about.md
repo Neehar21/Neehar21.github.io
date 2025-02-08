@@ -160,11 +160,28 @@ Algorithm for training PINNs affectively
 |-------------------------------|--------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
 | **Step 1: Preparation**       | Non-dimensionalize the PDE system                                                               | Ensures stability and consistency.                                                   |
 | **Step 2: Network Design**    | Represent the solution using an MLP with Fourier Feature Embeddings and Random Weight Factorization. | Use **Fourier embeddings**, tanh activation, and Glorot initialization.            |
-| **Step 3: Loss Function**     | Combine losses for initial conditions, boundary conditions, and physics laws.                   | $$ L(\theta) = \lambda_{ic} L_{ic}(\theta) + \lambda_{bc} L_{bc}(\theta) + \lambda_{r} L_{r}(\theta) $$
-   |
+| **Step 3: Loss Function**     | Combine losses for initial conditions, boundary conditions, and physics laws.                   | $$ L(\theta) = \lambda_{ic} L_{ic}(\theta) + \lambda_{bc} L_{bc}(\theta) + \lambda_{r} L_{r}(\theta) $$|
 | **Step 4: Weight Setup**      | Initialize all weights to 1.                                                                    | $$ \text{Global: } (\lambda_{ic}, \lambda_{bc}, \lambda_r); \text{ Temporal: } (w_i = 1) $$      |
 | **Step 5: Training Loop**     | Train the network using gradient descent.                                                       | $$ \text{Adjust temporal, global weights, update parameters } \theta. $$                    |
 
+Results
+------
+
+### Allen-Cahn equation:
+
+This is a widely studied non-linear PDE used to model phase transitions in physical systems. The equation is as follows:
+
+  $$ u_t - 0.0001 u_{xx} + 5u^3 - 5u = 0, \quad u(0,x) = x^2 \cos(\pi x), \quad t \in [0,1], x \in [-1,1] $$
+
+- **Issues with conventional PINNs:** After analyzing the performance of a conventional PINN model applied to the 1D Allen-Cahn equation three main issues are observed:
+
+  - **Gradient Imbalances:** Back-propagated gradients for the PDE residual loss dominate those of the initial condition loss, resulting in unbalanced updates during training.
+
+  - **Spectral Bias:** The NTK eigenvalues show rapid decay, indicating the model’s struggle to capture high-frequency details in the solution, as shown in the figure.
+
+  - **Causality Violation:** The model minimizes PDE residuals at later times first, violating the physical causality of the problem.
+
+![Allen cahn](/images/allenCahn.png)
 
 
 
