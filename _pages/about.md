@@ -38,12 +38,14 @@ This component enforces that the solution meets the boundary conditions at the s
 $$
 L_{bc}(\theta) = \frac{1}{N_{bc}} \sum_{i=1}^{N_{bc}} \left| B[u_{\theta}](t_{bc}^i, x_{bc}^i) \right|^2
 $$
+- $L_{bc}(\theta)$ is the loss function enforcing boundary conditions.  
+- $N_{bc}$ is the number of training points used to enforce the boundary condition.  
+- $B[u_{\theta}]$ is the boundary condition operator applied to the predicted solution at time $t$ and spatial location $x$.  
+- \( L_{bc}(\theta) \) is the loss function enforcing boundary conditions.  
+- \( N_{bc} \) is the number of training points used to enforce the boundary condition.  
+- \( B[u_{\theta}] \) is the boundary condition operator applied to the predicted solution at time \( t \) and spatial location \( x \).  
 
-![Boundary Condition](/images/Boundloss.png){: width = "50%"}
 
-  - Lbc(θ) is the loss function enforcing boundary conditions.
-  - Nbc is the number of training points used to enforce the boundary condition.
-  - B[uθ] is the boundary condition operator applied to the predicted solution at time t and spatial location x.
 
 ### PDE Residual Loss: 
 The core of the PINN approach is ensuring that the network's predictions satisfy the PDE itself. This loss term calculates how well the network's output adheres to the governing differential equation by minimizing the residual of the PDE.
@@ -52,11 +54,9 @@ $$
 L_r(\theta) = \frac{1}{N_r} \sum_{i=1}^{N_r} \left| R_{\theta}(t_r^i, x_r^i) \right|^2
 $$
 
-![Residual Loss](/images/resloss.png){: width = "50%"}
-
-  - Lr(θ) is the loss function enforcing the PDE constraints.
-  - Nr is the number of training points sampled for checking PDE satisfaction.
-  - Rθ(t,x) is the PDE residual, which measures how well the network's predictions satisfy the differential equation.
+- $L_{r}(\theta)$ is the loss function enforcing the PDE constraints.  
+- $N_{r}$ is the number of training points sampled for checking PDE satisfaction.  
+- $R_{\theta}(t, x)$ is the PDE residual, which measures how well the network's predictions satisfy the differential equation.  
 
 The goal of minimizing this term is to ensure that the neural network’s learned solution respects the underlying physical equations governing the system.
 
