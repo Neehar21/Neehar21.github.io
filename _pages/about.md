@@ -97,7 +97,27 @@ The composite loss function in PINNs consists of multiple terms, including initi
 Proposed training pipeline
 ------
 To overcome these challenges the following training pipeline has been proposed:
+
 ![Training pipeline](/images/TrPipeline.png){: width = "50%"}
+
+### PDE Non-Dimensionalization:
+
+Non-dimensionalization is a technique used to simplify and analyze physical systems by scaling variables such that they become dimensionless and fall within a reasonable numerical range.The key benefits of non-dimensionalization include:
+
+- Preventing vanishing gradients
+- Avoiding numerical dominance of certain variables
+- Improving convergence speed and stability
+
+
+### Selecting a suitable Network Architecture:
+
+Selecting a suitable architecture is also critical for ensuring that PINNs can efficiently learn complex PDE solutions. The following network design choices have been proposed:
+
+- **Multi-Layer Perceptrons (MLPs):**  MLPs are universal approximatiors, mapping spatial and temporal coordinates to solution values. 
+
+  - **Recommended depth and width:** 3–6 layers with 128–512 neurons per layer.
+  - **Activation functions:** The Tanh function is preferred as it provides smooth, differentiable outputs. Functions like ReLU are avoided due to their zero second-order derivative, which negatively impacts PDE residual computation.
+  - **Initialization:** The Glorot scheme is used to initialize weights, ensuring balanced gradient flow during training.
 
 
 For site content, there is one markdown file for each type of content, which are stored in directories like _publications, _talks, _posts, _teaching, or _pages. For example, each talk is a markdown file in the [_talks directory](https://github.com/academicpages/academicpages.github.io/tree/master/_talks). At the top of each markdown file is structured data in YAML about the talk, which the theme will parse to do lots of cool stuff. The same structured data about a talk is used to generate the list of talks on the [Talks page](https://academicpages.github.io/talks), each [individual page](https://academicpages.github.io/talks/2012-03-01-talk-1) for specific talks, the talks section for the [CV page](https://academicpages.github.io/cv), and the [map of places you've given a talk](https://academicpages.github.io/talkmap.html) (if you run this [python file](https://github.com/academicpages/academicpages.github.io/blob/master/talkmap.py) or [Jupyter notebook](https://github.com/academicpages/academicpages.github.io/blob/master/talkmap.ipynb), which creates the HTML for the map based on the contents of the _talks directory).
