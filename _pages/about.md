@@ -67,7 +67,7 @@ Training of a PINN
 ------
 The training process of a Physics-Informed Neural Network (PINN) involves several key steps that ensure the network learns a solution that satisfies both the given initial and boundary conditions as well as the underlying partial differential equation (PDE). 
 
-![PINN training](/images/PINNtr.png.png){: width = "50%"}
+![PINN training](/images/PINNtr.png){: width = "50%"}
 
 ### Neural Network Representation
 At the core of the architecture is a fully connected neural network that takes spatial and temporal coordinates u(x,t) as inputs and produces an approximation of the solution function u(x,t). The network parameters (weights and biases) are updated iteratively to improve accuracy.
@@ -85,13 +85,13 @@ Challenges in Training PINNs
 ------
 The training process of PINNs is often hindered by several critical pathologies. These challenges can degrade the accuracy, robustness, and physical reliability of the learned solution. Below, we explore some of the key issues faced during training.
 
-- Spectral Bias
+### Spectral Bias
 PINNs tend to struggle with learning high-frequency components of a solution. This is because standard neural networks typically learn smooth, low-frequency features, making it difficult to approximate sharp gradients.
 
-- Causality Violation
+### Causality Violation
 Traditional training methods may fail to respect the inherent temporal dependencies in PDE solutions. This can lead to scenarios where later time steps are learned incorrectly because earlier ones were not sufficiently accurate.
 
-- Unbalanced Loss Gradients
+### Unbalanced Loss Gradients
 The composite loss function in PINNs consists of multiple terms, including initial condition loss, boundary condition loss, and PDE residual loss. If these terms propagate gradients unevenly, optimization can become unstable or biased, leading to poor generalization.
 
 Proposed training pipeline
